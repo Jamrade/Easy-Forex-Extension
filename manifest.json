@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Easy Forex",
+    "version": "1.0.0",
+    "description": "An application to connect you to forex.com",
+    "side_panel": {
+        "default_path": "./src/pages/Login.html"
+    },
+    "permissions": ["sidePanel"],
+    "action": {
+        "default_title": "Click to open panel"
+    }
+}

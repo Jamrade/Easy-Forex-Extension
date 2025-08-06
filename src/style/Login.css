@@ -1,0 +1,112 @@
+* {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+/* Page Level */
+
+#pageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+
+    background-image: url("../assets/login/LoginBackground.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Login Level */
+
+#loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+    padding: 30px;
+    gap: 20px;
+}
+
+/* Input Level */
+
+#mainInputContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+    width: 300px;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 5px;
+}
+
+.inputIcon {
+    width: 25px;
+    height: 25px;
+}
+
+.input {
+    width: 75%;
+    color: black;
+    border: none;
+    border-bottom: 2px solid black
+}
+
+.input:focus {
+    border: 2px solid gray
+}
+
+
+/* Button Level */
+
+#buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+    gap: 10px;
+}
+
+.loginButton {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.loginButton:hover {
+    color: black;
+    background-color: lightgray;
+}
+
+/* Misc Items (Logo Login) */
+
+#logoContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#loginLogo {
+    width: 400px;
+    height: 100px;
+}
+
+#loginTitle {
+    margin-top: -20px;
+}
+
+
+
