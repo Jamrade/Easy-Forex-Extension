@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Forex</title>
     <link href="../style/Login.css" rel="stylesheet">
+    <script src="../compiled-src/login.js"></script>
 </head>
 <body>
     <div id="pageContainer">
@@ -18,19 +19,19 @@
             <div id="mainInputContainer">
                 <div class="inputContainer">
                     <img src="../assets/login/UsernameIcon.png" class="inputElement inputIcon" alt="username icon">
-                    <input class="input" name="username" type="text" placeholder="Username">
+                    <input id="username" class="input" name="username" type="text" placeholder="Username">
                 </div>
                 <div class="inputContainer">
                     <img src="../assets/login/PasswordIcon.png" class="inputElement inputIcon" alt="password icon">
-                    <input class="input" name="password" type="password" placeholder="Password">
+                    <input id="password" class="input" name="password" type="password" placeholder="Password">
                 </div>
                 <div class="inputContainer">
                     <img src="../assets/login/KeyIcon.png" class="inputElement inputIcon" alt="app key icon">
-                    <input class="input" name="appKey" type="password" placeholder="App Key">
+                    <input id="appKey" class="input" name="appKey" type="password" placeholder="App Key">
                 </div>
             </div>
             <div id="buttonContainer">
-                <button class="loginButton">Login</button>
+                <button onclick="newLogin.getCredentials()" class="loginButton">Login</button>
                 <button class="loginButton">Signup</button>
             </div>
         </div>

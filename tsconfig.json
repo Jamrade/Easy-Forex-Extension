@@ -11,5 +11,9 @@
         "allowJs": true,
         "sourceMap": true
     },
-    "files":["./typescript/background.ts"]
+    "files":[
+        "./typescript/background.ts",
+        "./typescript/login.ts",
+        "./typescript/apihandler.ts"
+    ]
 }
