@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "lib":["ES2024", "DOM"],
+        "target":"es2024",
+        "strict": true,
+        "outDir": "./src/compiled-src",
+        "declarationDir": "./typescript",
+        "declaration": true,
+        "declarationMap": true,
+        "checkJs": true,
+        "allowJs": true,
+        "sourceMap": true
+    },
+    "files":["./typescript/background.ts"]
+}
