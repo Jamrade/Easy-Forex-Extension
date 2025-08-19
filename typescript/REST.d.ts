@@ -4,22 +4,20 @@ interface RESTAPIHandler {
     }, body: {
         [key: string]: string;
     }, resolver: (response: object) => null, reject: (error: string) => null): null;
-    buildQueryUrl(baseUrl: string, credentials: {
-        [key: string]: string;
-    }, parameters: {
+    buildQueryUrl(baseUrl: string, parameters: {
         [key: string]: string;
     }): string;
 }
 declare class APIHandler implements RESTAPIHandler {
-    sendRequest(url: string, method: string, headers: {
+    sendRequest(url: string, method: string, requestHeaders: {
         [key: string]: string;
-    }, body: {
+    }, requestBody: {
         [key: string]: string;
-    }, resolver: (response: object) => null, reject: (error: string) => null): null;
-    buildQueryUrl(baseUrl: string, credentials: {
+    }, resolver: (response: {
         [key: string]: string;
-    }, parameters: {
+    }) => null, reject: (error: string) => null): null;
+    buildQueryUrl(baseUrl: string, parameters: {
         [key: string]: string;
     }): string;
 }
-//# sourceMappingURL=apihandler.d.ts.map
+//# sourceMappingURL=REST.d.ts.map

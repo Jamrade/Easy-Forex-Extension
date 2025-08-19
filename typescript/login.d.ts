@@ -1,22 +1,33 @@
 interface Access {
     cookieManager: Object;
     apiHandler: Object;
-    getCredentials(): Object;
+    username: string;
+    getCredentials(): {
+        [key: string]: string;
+    };
     inputValidator(valuesToTest: Array<string>): boolean;
     saveSessionInfo(response: object): null;
     requestAuthorization(): null;
     displayError(errorMessage: string): null;
 }
 declare class Login implements Access {
-    cookieManager: {};
+    cookieManager: CookieHandler;
     apiHandler: APIHandler;
+    username: string;
     constructor();
-    getCredentials(): object;
+    getCredentials(): {
+        [key: string]: string;
+    };
     inputValidator(valuesToTest: Array<string>): boolean;
-    saveSessionInfo(response: object): null;
+    saveSessionInfo(response: {
+        [key: string]: string;
+    }): null;
     requestAuthorization(): null;
     displayError(errorMessage: string): null;
-    getAccountId(sessionToken: string, username: string): string;
+    requestAccountId(sessionToken: string, username: string): null;
+    saveAccountId(response: {
+        [key: string]: any;
+    }): null;
     navigateToHomepage(): null;
 }
 declare let newLogin: any;

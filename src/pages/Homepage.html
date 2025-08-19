@@ -3,9 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Easy Forex</title>
+    <script src="https://unpkg.com/lightstreamer-client-web@9.0.0/lightstreamer.min.js"></script>
+    <script src="../compiled-src/REST.js"></script>
+    <script src="../compiled-src/account.js"></script>
+    <script src="../compiled-src/cookies.js"></script>
+    <script src="../compiled-src/lightstreamer.js"></script>
+    <script src="../compiled-src/historic.js"></script>
+    <script src="../compiled-src/account.js" defer></script>
+    <script src="../compiled-src/strategy.js" defer></script>
+    <script>
+        console.log(`Cookies: ${document.cookie}`)
+    </script>
 </head>
 <body>
-    
+    <header id="mainHeaderContainer">
+        <div id="leftContainer">
+            <img class="headerLogo" alt="Header Logo">
+        </div>
+        <div id="accountStatsContainer">
+            <div class="statsContainer">
+                <p class="statsTitle">Tradeable Funds</p>
+                <p class="statsInformation"><span id="tradeableFunds">0</span> <span id="CurrencyISO" class="currencyType">USD</span></p>
+            </div>
+            <div class="statsContainer">
+                <p class="statsTitle">Cash</p>
+                <p class="statsInformation"><span id="cash"></span> <span id="CurrencyISO" class="currencyType">USD</span></p>
+            </div>
+            <div class="statsContainer">
+                <p class="statsTitle">Equity</p>
+                <p class="statsInformation"><span id="equity">0</span> <span id="CurrencyISO" class="currencyType">USD</span></p>
+            </div>
+            <div class="statsContainer">
+                <p class="statsTitle">P / L (Unrealized)</p>
+                <p class="statsInformation"><span id="profitLoss">0</span> <span id="CurrencyISO" class="currencyType">USD</span></p>
+            </div>
+            <div class="statsContainer">
+                <p class="statsTitle">Margin</p>
+                <p class="statsInformation"><span id="margin">0</span> <span id="CurrencyISO" class="currencyType">USD</span></p>
+            </div>
+            <div class="statsContainer">
+                <p class="statsTitle">Margin (%)</p>
+                <p class="statsInformation"><span id="marginIndicator">0</span>%</p>
+            </div>
+        </div>
+        <div id="rightContainer">
+            <button class="headerButton">Markets</button>
+            <button class="headerButton">Strategy</button>
+        </div>
+    </header>
+    <div id="pageContainer">
+        <!-- This will be dynamically added per strategy instead of written out like this-->
+        <div id="marketContainer">
+            <div class="marketContainer">
+                <h3 class="marketHeader">EUR/USD</h3>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Bid</p>
+                    <p class="marketStatsValue" id="bid">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Offer</p>
+                    <p class="marketStatsValue" id="offer">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Split</p>
+                    <p class="marketStatsValue" id="split">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Price</p>
+                    <p class="marketStatsValue" id="price">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">High</p>
+                    <p class="marketStatsValue" id="high">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Low</p>
+                    <p class="marketStatsValue" id="low">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Change</p>
+                    <p class="marketStatsValue" id="change">Null</p>
+                </div>
+                <div class="marketStatsContainer">
+                    <p class="marketStatsLabel">Direction</p>
+                    <p class="marketStatsValue" id="direction">Null</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

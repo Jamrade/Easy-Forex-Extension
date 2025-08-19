@@ -4,9 +4,11 @@
 class Login {
     cookieManager;
     apiHandler;
+    username;
     constructor() {
+        this.cookieManager = new CookieHandler();
         this.apiHandler = new APIHandler();
-        this.cookieManager = {};
+        this.username = "";
     }
     getCredentials() {
         const credentials = {};
@@ -18,6 +20,7 @@ class Login {
             credentials["password"] = password;
             credentials["appKey"] = appKey;
         }
+        this.username = credentials["username"];
         return credentials;
     }
     inputValidator(valuesToTest) {
@@ -35,11 +38,14 @@ class Login {
         return true;
     }
     saveSessionInfo(response) {
-        // session manager call here
+        this.cookieManager.createSessionCookie("Username", this.username);
+        this.cookieManager.createSessionCookie("Session", response.session);
+        this.requestAccountId(response.session, this.username);
+        //this.navigateToHomepage()
         return null;
     }
     requestAuthorization() {
-        const credentials = this.getCredentials();
+        let credentials = this.getCredentials();
         const url = "https://ciapi.cityindex.com/v2/Session";
         const method = "POST";
         const body = {
@@ -50,16 +56,31 @@ class Login {
             "AppKey": credentials.appKey
         };
         const header = {
-            "content-type": "application/json"
+            "Content-type": "application/json"
         };
-        this.apiHandler.sendRequest(url, method, header, body, this.saveSessionInfo, this.displayError);
+        this.apiHandler.sendRequest(url, method, header, body, this.saveSessionInfo.bind(this), this.displayError);
         return null;
     }
     displayError(errorMessage) {
+        console.log(errorMessage);
         return null;
     }
-    getAccountId(sessionToken, username) {
-        return "";
+    requestAccountId(sessionToken, username) {
+        const url = "https://ciapi.cityindex.com/v2/userAccount/ClientAndTradingAccount";
+        const method = "GET";
+        const headers = {
+            "content-type": "application/json",
+            "UserName": username,
+            "Session": sessionToken
+        };
+        const body = {};
+        this.apiHandler.sendRequest(url, method, headers, body, this.saveAccountId.bind(this), this.displayError);
+        return null;
+    }
+    saveAccountId(response) {
+        this.cookieManager.createSessionCookie("accountId", response.clientAccounts[0].clientAccountId);
+        this.navigateToHomepage();
+        return null;
     }
     navigateToHomepage() {
         window.location.href = "./Homepage.html";

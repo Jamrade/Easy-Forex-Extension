@@ -6,6 +6,8 @@
     <title>Easy Forex</title>
     <link href="../style/Login.css" rel="stylesheet">
     <script src="../compiled-src/login.js"></script>
+    <script src="../compiled-src/REST.js"></script>
+    <script src="../compiled-src/cookies.js"></script>
 </head>
 <body>
     <div id="pageContainer">
@@ -31,7 +33,7 @@
                 </div>
             </div>
             <div id="buttonContainer">
-                <button onclick="newLogin.getCredentials()" class="loginButton">Login</button>
+                <button onclick="newLogin.requestAuthorization()" class="loginButton">Login</button>
                 <button class="loginButton">Signup</button>
             </div>
         </div>
