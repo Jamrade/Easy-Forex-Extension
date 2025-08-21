@@ -52,18 +52,16 @@ class Markets implements MarketOperations {
     }
 
     createSearchParameters(): HTMLElement {
-        let parentDiv: HTMLElement = document.createElement("div")
-
-        let fields: {[key: string]: Array<string>} = {
-            "FirstCurrencyISO": ["Currency One", "text"],
-            "SecondCurrencyISO": ["Currency Two", "text"],
-            ""
-        }
+        const parentDiv: HTMLElement = document.createElement("div")
 
         return parentDiv
     }
 
     searchMarkets(searchType: string, searchText: string): undefined {
+        
+    }
+
+    showResults(): undefined {
         
     }
 
