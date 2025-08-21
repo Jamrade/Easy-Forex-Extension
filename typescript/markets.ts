@@ -4,21 +4,21 @@ interface MarketOperations {
 
     //storageService: Object;
 
-    APIHandler: Object;
+    apiHandler: Object;
 
     credentialManager: Object;
 
     credentials: {[key: string]: string}
 
-    createSearchWindow: () => undefined;
+    //createSearchWindow: () => undefined;
 
-    getSearchOptions: () => {[key: string]: string}
+    //getSearchOptions: () => {[key: string]: string}
 
     searchMarkets: (searchType: string, searchText: string) => undefined;
 
-    showResults:() => undefined;
+    showResults:(dataObject: {[key: string]: string}) => null;
 
-    selectMarketForStrategy: () => undefined;
+    //selectMarketForStrategy: () => undefined;
 
 }
 
@@ -26,43 +26,37 @@ interface MarketOperations {
 
 class Markets implements MarketOperations {
 
-    APIHandler: APIHandler;
+    apiHandler: APIHandler;
 
     credentialManager: CredentialManager;
 
     credentials: {[key:string]: string}
 
     constructor() {
-        this.APIHandler = new APIHandler()
+        this.apiHandler = new APIHandler()
         this.credentialManager = new CredentialManager()
         this.credentials = this.credentialManager.getCredentials()
     }
 
-    createSearchWindow(): undefined {
-        const addMarketButton: HTMLElement | null = document.getElementById("addMarket");
-        addMarketButton!.remove();
-
-        const mainContainer: HTMLElement | null = document.getElementById("marketsContainer");
-
-        const parentDiv: HTMLElement = document.createElement("div")
-        parentDiv.classList.add("marketSearchContainer")
-
-        parentDiv.appendChild(this.createSearchParameters())
-        
-    }
-
-    createSearchParameters(): HTMLElement {
-        const parentDiv: HTMLElement = document.createElement("div")
-
-        return parentDiv
-    }
+    createSearchElements(): undefined {}
 
     searchMarkets(searchType: string, searchText: string): undefined {
-        
+        let baseUrl: string = "https://ciapi.cityindex.com/TradingAPI/market/search"
+
+        let requestUrl: string = this.apiHandler.buildQueryUrl(baseUrl, {"SearchByMarketName": "TRUE", "Query": "USD", "MaxResults": "10"})
+
+        requestUrl += `&Username=${this.credentials.Username}&Session=${this.credentials.Session}`
+
+        const headers = {
+            "content-type": "application/json"
+        }
+
+        this.apiHandler.sendRequest(requestUrl, "GET", headers, {}, this.showResults.bind(this), (error) => {console.log(error); return null})
     }
 
-    showResults(): undefined {
-        
+    showResults(dataObject: {[key: string]: string}): null {
+        console.log(dataObject)
+        return null
     }
 
 }
@@ -70,5 +64,7 @@ class Markets implements MarketOperations {
 /* ------------- State Check ------------- */
 
 window.addEventListener("DOMContentLoaded", () => {
-    console.log("Loaded")
+    let marketSearch: Markets = new Markets()
+
+    marketSearch.searchMarkets("Some Text", "Other Text")
 })

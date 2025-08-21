@@ -19,7 +19,6 @@
         "./typescript/account.ts",
         "./typescript/markets.ts",
         "./typescript/journal.ts",
-        "typescript/marketinfo.ts",
         "./typescript/lightstreamer.ts",
         "./typescript/historic.ts",
         "./typescript/credentials.ts",

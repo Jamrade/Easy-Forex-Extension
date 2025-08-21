@@ -11,8 +11,6 @@ class MarketStats {
         this.marketElements = {};
     }
     initializeMarketElements() {
-        const addMarketButton = document.getElementById("addMarket");
-        addMarketButton.remove();
         const mainContainer = document.getElementById("marketsContainer");
         const parentDiv = document.createElement("div");
         parentDiv.classList.add("marketContainer");
