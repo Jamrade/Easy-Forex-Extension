@@ -1,6 +1,6 @@
 interface LightstreamerOperations {
-    cookieHandler: CookieHandler;
-    getCredentials: () => {
+    credentialManager: Object;
+    credentials: {
         [key: string]: string;
     };
     createClient: (url: string, adapterSet: string) => string;
@@ -12,11 +12,11 @@ interface LightstreamerOperations {
     };
 }
 declare class LightstreamerHandler implements LightstreamerOperations {
-    cookieHandler: CookieHandler;
-    constructor();
-    getCredentials(): {
+    credentialManager: CredentialManager;
+    credentials: {
         [key: string]: string;
     };
+    constructor();
     createClient(url: string, adapterSet: string): string;
     createSubscription(type: string, items: Array<string>, fields: Array<string>, dataAdapter: string): any;
     createSubscriptionListener(logic?: (dataObject: any) => any): {

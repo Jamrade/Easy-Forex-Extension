@@ -1,67 +1,67 @@
 /* ----------- interfaces ------------*/
 
-interface StrategyOperations {
+interface MarketStatsOperations {
 
     lightStreamer: Object;
 
     APIHandler: Object;
 
-    cookieHandler: Object;
-
     marketElements: {[key: string]: HTMLElement | null}
     
-    //tradeHandler: Object;
+    initializeMarketElements: () => {[key: string]: any};
 
-    getSelectedMarkets: () => Array<string>;
-
-    getSelectedStrategy: () => {[key: string]: any}
-
-    subscribeToStrategies: () => undefined;
-
-    displaySelectedStrategies: () => undefined;
-
-    displayStrategyOverview: () => undefined;
+    subscribeToMarket: () => undefined;
 
 }
 
 /* ----------- implementations ------------ */
 
-class StrategyManager implements StrategyOperations {
+class MarketStats implements MarketStatsOperations {
 
     lightStreamer: LightstreamerHandler;
 
     APIHandler: APIHandler;
-
-    cookieHandler: CookieHandler;
 
     marketElements: {[key: string]: HTMLElement | null};
 
     constructor() {
         this.lightStreamer = new LightstreamerHandler();
         this.APIHandler = new APIHandler();
-        this.cookieHandler = new CookieHandler();
-        this.marketElements = this.initializeMarketElements();
-    }
-
-    getSelectedMarkets(): Array<string> {
-        return []
-    }
-
-    getSelectedStrategy(): {[key:string]: any} {
-        return {}
+        this.marketElements = {}
     }
 
     initializeMarketElements(): {[key: string]: HTMLElement | null}{
-        let marketElements: {[key: string]: HTMLElement | null} = {
-            "Bid": this.checkElement("bid"),
-            "Offer": this.checkElement("offer"),
-            "Split": this.checkElement("split"),
-            "Price": this.checkElement("price"),
-            "High": this.checkElement("high"),
-            "Low": this.checkElement("low"),
-            "Change": this.checkElement("change"),
-            "Direction": this.checkElement("direction")
+
+        const mainContainer: HTMLElement | null = document.getElementById("marketsContainer")
+
+        const parentDiv: HTMLElement = document.createElement("div")
+        parentDiv.classList.add("marketContainer")
+
+        let statsItems: Array<string> = ["Bid", "Offer", "Split", "Price", "High", "Low", "Change", "Direction"]
+        let marketElements: {[key: string]: HTMLElement} = {}
+
+        for (let index in statsItems) {
+            const marketStatsDiv: HTMLElement | null = document.createElement("div")
+            marketStatsDiv.classList.add("marketStatsContainer")
+
+            const labelElement: HTMLElement = document.createElement("h3")
+            const valueElement: HTMLElement = document.createElement("p")
+
+            let statsItem: string = statsItems[index]
+
+            labelElement.innerHTML = statsItem
+
+            marketElements[statsItem] = valueElement;
+
+            marketStatsDiv.appendChild(labelElement)
+            marketStatsDiv.appendChild(valueElement)
+
+            parentDiv.appendChild(marketStatsDiv)
         }
+
+        mainContainer!.appendChild(parentDiv)
+
+        this.marketElements = marketElements
 
         return marketElements
     }
@@ -77,7 +77,7 @@ class StrategyManager implements StrategyOperations {
         return element
     }
 
-    subscribeToStrategies(): undefined {
+    subscribeToMarket(): undefined {
         let client: Object = this.lightStreamer.createClient("https://push.cityindex.com/", "STREAMINGALL")
         let subscription: Object = this.lightStreamer.createSubscription("MERGE", [`PRICES.154297`], ["Bid", "Offer", "Price", "High", "Low", "Change", "Direction", "StatusSummary"], "PRICES")
         let listener: Object = this.lightStreamer.createSubscriptionListener(this.displayMarketInformation.bind(this))
@@ -93,28 +93,24 @@ class StrategyManager implements StrategyOperations {
                 try {
                     this.marketElements[key]!.innerHTML = dataObject.getValue(key);
                 } catch (error) {
-                    console.log(`${key} does not exist in data object`)
+                    if (key != "Split") {
+                        console.log(`${key} does not exist in data object`)
+                    }
                 }   
             }
         }
 
         this.marketElements["Split"]!.innerHTML = ((dataObject.getValue("Offer") - dataObject.getValue("Bid")).toFixed(5)).toString()
     }
-    
-    
-    displaySelectedStrategies(): undefined {
-
-    }
-
-    displayStrategyOverview(): undefined {
-
-    }
 
 }
 
 /* ------------- State Check ------------- */
-window.addEventListener("DOMContentLoaded", () => {
-    let stratTest: StrategyManager = new StrategyManager()
 
-    stratTest.subscribeToStrategies()
+let marketStatsHandler: MarketStats;
+
+window.addEventListener("DOMContentLoaded", () => {
+    marketStatsHandler = new MarketStats()
+
+    //stratTest.subscribeToStrategy()
 })

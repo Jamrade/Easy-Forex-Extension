@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Forex</title>
+    <link href="../style/Homepage.css" rel="stylesheet">
     <script src="https://unpkg.com/lightstreamer-client-web@9.0.0/lightstreamer.min.js"></script>
     <script src="../compiled-src/REST.js"></script>
     <script src="../compiled-src/account.js"></script>
     <script src="../compiled-src/cookies.js"></script>
     <script src="../compiled-src/lightstreamer.js"></script>
     <script src="../compiled-src/historic.js"></script>
+    <script src="../compiled-src/credentials.js"></script>
     <script src="../compiled-src/account.js" defer></script>
-    <script src="../compiled-src/strategy.js" defer></script>
-    <script>
-        console.log(`Cookies: ${document.cookie}`)
-    </script>
+    <script src="../compiled-src/marketstats.js" defer></script>
 </head>
 <body>
     <header id="mainHeaderContainer">
         <div id="leftContainer">
-            <img class="headerLogo" alt="Header Logo">
+            <img class="headerLogo" alt="Header Logo" src="../assets/homepage/HeaderLogo.png">
         </div>
         <div id="accountStatsContainer">
             <div class="statsContainer">
@@ -54,42 +53,8 @@
     </header>
     <div id="pageContainer">
         <!-- This will be dynamically added per strategy instead of written out like this-->
-        <div id="marketContainer">
-            <div class="marketContainer">
-                <h3 class="marketHeader">EUR/USD</h3>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Bid</p>
-                    <p class="marketStatsValue" id="bid">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Offer</p>
-                    <p class="marketStatsValue" id="offer">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Split</p>
-                    <p class="marketStatsValue" id="split">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Price</p>
-                    <p class="marketStatsValue" id="price">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">High</p>
-                    <p class="marketStatsValue" id="high">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Low</p>
-                    <p class="marketStatsValue" id="low">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Change</p>
-                    <p class="marketStatsValue" id="change">Null</p>
-                </div>
-                <div class="marketStatsContainer">
-                    <p class="marketStatsLabel">Direction</p>
-                    <p class="marketStatsValue" id="direction">Null</p>
-                </div>
-            </div>
+        <div id="marketsContainer">
+            <button id="addMarket" onclick="marketStatsHandler.initializeMarketElements(); marketStatsHandler.subscribeToMarket()"><b>+</b> Click to add a market </button>
         </div>
     </div>
 </body>

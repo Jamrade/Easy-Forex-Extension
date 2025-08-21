@@ -2,27 +2,16 @@
 /* ----------- interfaces ------------*/
 /* ----------- implementations ------------ */
 class LightstreamerHandler {
-    cookieHandler;
+    credentialManager;
+    credentials;
     constructor() {
-        this.cookieHandler = new CookieHandler();
-    }
-    getCredentials() {
-        let username = this.cookieHandler.searchForCookie("Username");
-        let session = this.cookieHandler.searchForCookie("Session");
-        if (!username) {
-            window.location.href = "../pages/Login.html";
-        }
-        if (!session) {
-            console.log("Implement something to automatically grab and set the sessionID");
-        }
-        let credentials = { "Username": username, "Session": session };
-        return credentials;
+        this.credentialManager = new CredentialManager();
+        this.credentials = this.credentialManager.getCredentials();
     }
     createClient(url, adapterSet) {
-        let credentials = this.getCredentials();
         let client = new LightstreamerClient(url, adapterSet);
-        client.connectionDetails.setUser(credentials.Username);
-        client.connectionDetails.setPassword(credentials.Session);
+        client.connectionDetails.setUser(this.credentials.Username);
+        client.connectionDetails.setPassword(this.credentials.Session);
         client.connect();
         return client;
     }

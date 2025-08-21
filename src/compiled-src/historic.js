@@ -59,6 +59,7 @@ class HistoricPrices {
         this.createRequest(requestUrl);
     }
     getHistoricBeforeDate(interval, span, maxReturn, marketId) {
+        //To be implemented if needed
     }
     getMostRecentBars(interval, span, numberOfBars, marketId) {
         let baseUrl = `https://ciapi.cityindex.com/TradingAPI/market/${marketId}/barhistory`;

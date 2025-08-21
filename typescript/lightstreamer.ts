@@ -2,9 +2,9 @@
 
 interface LightstreamerOperations {
 
-    cookieHandler: CookieHandler;
+    credentialManager: Object;
 
-    getCredentials: () => {[key: string]: string}
+    credentials: {[key: string]: string};
 
     createClient: (url: string, adapterSet: string) => string;
 
@@ -20,37 +20,20 @@ interface LightstreamerOperations {
 
 class LightstreamerHandler implements LightstreamerOperations {
 
-    cookieHandler: CookieHandler
+    credentialManager: CredentialManager;
+
+    credentials: {[key: string]: string}
 
     constructor() {
-        this.cookieHandler = new CookieHandler();
-    }
-
-    getCredentials(): {[key: string]: string} {
-
-        let username: string = this.cookieHandler.searchForCookie("Username")
-        let session: string = this.cookieHandler.searchForCookie("Session")
-
-        if(!username) {
-            window.location.href = "../pages/Login.html"
-        }
-        if(!session) {
-            console.log("Implement something to automatically grab and set the sessionID")
-        }
-
-        let credentials: {[key: string]: string} = {"Username": username, "Session": session}
-
-        return credentials
-
+        this.credentialManager = new CredentialManager()
+        this.credentials = this.credentialManager.getCredentials()
     }
 
     createClient(url: string, adapterSet: string): string {
 
-        let credentials: {[key: string]: string} = this.getCredentials()
-
         let client = new LightstreamerClient(url, adapterSet);
-        client.connectionDetails.setUser(credentials.Username);
-        client.connectionDetails.setPassword(credentials.Session);
+        client.connectionDetails.setUser(this.credentials.Username);
+        client.connectionDetails.setPassword(this.credentials.Session);
         
         client.connect()
         

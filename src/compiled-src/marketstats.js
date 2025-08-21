@@ -1,34 +1,37 @@
 "use strict";
 /* ----------- interfaces ------------*/
 /* ----------- implementations ------------ */
-class StrategyManager {
+class MarketStats {
     lightStreamer;
     APIHandler;
-    cookieHandler;
     marketElements;
     constructor() {
         this.lightStreamer = new LightstreamerHandler();
         this.APIHandler = new APIHandler();
-        this.cookieHandler = new CookieHandler();
-        this.marketElements = this.initializeMarketElements();
-    }
-    getSelectedMarkets() {
-        return [];
-    }
-    getSelectedStrategy() {
-        return {};
+        this.marketElements = {};
     }
     initializeMarketElements() {
-        let marketElements = {
-            "Bid": this.checkElement("bid"),
-            "Offer": this.checkElement("offer"),
-            "Split": this.checkElement("split"),
-            "Price": this.checkElement("price"),
-            "High": this.checkElement("high"),
-            "Low": this.checkElement("low"),
-            "Change": this.checkElement("change"),
-            "Direction": this.checkElement("direction")
-        };
+        const addMarketButton = document.getElementById("addMarket");
+        addMarketButton.remove();
+        const mainContainer = document.getElementById("marketsContainer");
+        const parentDiv = document.createElement("div");
+        parentDiv.classList.add("marketContainer");
+        let statsItems = ["Bid", "Offer", "Split", "Price", "High", "Low", "Change", "Direction"];
+        let marketElements = {};
+        for (let index in statsItems) {
+            const marketStatsDiv = document.createElement("div");
+            marketStatsDiv.classList.add("marketStatsContainer");
+            const labelElement = document.createElement("h3");
+            const valueElement = document.createElement("p");
+            let statsItem = statsItems[index];
+            labelElement.innerHTML = statsItem;
+            marketElements[statsItem] = valueElement;
+            marketStatsDiv.appendChild(labelElement);
+            marketStatsDiv.appendChild(valueElement);
+            parentDiv.appendChild(marketStatsDiv);
+        }
+        mainContainer.appendChild(parentDiv);
+        this.marketElements = marketElements;
         return marketElements;
     }
     checkElement(elementId) {
@@ -38,7 +41,7 @@ class StrategyManager {
         }
         return element;
     }
-    subscribeToStrategies() {
+    subscribeToMarket() {
         let client = this.lightStreamer.createClient("https://push.cityindex.com/", "STREAMINGALL");
         let subscription = this.lightStreamer.createSubscription("MERGE", [`PRICES.154297`], ["Bid", "Offer", "Price", "High", "Low", "Change", "Direction", "StatusSummary"], "PRICES");
         let listener = this.lightStreamer.createSubscriptionListener(this.displayMarketInformation.bind(this));
@@ -52,20 +55,19 @@ class StrategyManager {
                     this.marketElements[key].innerHTML = dataObject.getValue(key);
                 }
                 catch (error) {
-                    console.log(`${key} does not exist in data object`);
+                    if (key != "Split") {
+                        console.log(`${key} does not exist in data object`);
+                    }
                 }
             }
         }
         this.marketElements["Split"].innerHTML = ((dataObject.getValue("Offer") - dataObject.getValue("Bid")).toFixed(5)).toString();
     }
-    displaySelectedStrategies() {
-    }
-    displayStrategyOverview() {
-    }
 }
 /* ------------- State Check ------------- */
+let marketStatsHandler;
 window.addEventListener("DOMContentLoaded", () => {
-    let stratTest = new StrategyManager();
-    stratTest.subscribeToStrategies();
+    marketStatsHandler = new MarketStats();
+    //stratTest.subscribeToStrategy()
 });
-//# sourceMappingURL=strategy.js.map
+//# sourceMappingURL=marketstats.js.map

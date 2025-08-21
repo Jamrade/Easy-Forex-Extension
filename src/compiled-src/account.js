@@ -2,24 +2,17 @@
 /* ----------- interfaces ------------*/
 /* ----------- implementations ------------ */
 class AccountHandler {
-    cookieHandler;
+    credentialManager;
     apiHandler;
     lightStreamer;
-    accountId;
+    credentials;
     statsElements;
     constructor() {
-        this.cookieHandler = new CookieHandler();
         this.apiHandler = new APIHandler();
         this.lightStreamer = new LightstreamerHandler();
-        this.accountId = this.getAccountId();
+        this.credentialManager = new CredentialManager();
+        this.credentials = this.credentialManager.getCredentials();
         this.statsElements = this.initializeStatsElements();
-    }
-    getAccountId() {
-        let accountId = this.cookieHandler.searchForCookie("accountId");
-        if (accountId == "") {
-            window.location.href = "../pages/Login.html";
-        }
-        return accountId;
     }
     initializeStatsElements() {
         let statsElements = {
@@ -41,7 +34,7 @@ class AccountHandler {
     }
     subscribeToAccountStats() {
         let client = this.lightStreamer.createClient("https://push.cityindex.com/", "STREAMINGALL");
-        let subscription = this.lightStreamer.createSubscription("MERGE", [`CLIENTACCOUNTMARGIN.${this.accountId}`], ["TradeableFunds", "Cash", "NetEquity", "OpenTradeEquity", "Margin", "MarginIndicator", "CurrencyISO",], "CLIENTACCOUNTMARGIN");
+        let subscription = this.lightStreamer.createSubscription("MERGE", [`CLIENTACCOUNTMARGIN.${this.credentials.accountId}`], ["TradeableFunds", "Cash", "NetEquity", "OpenTradeEquity", "Margin", "MarginIndicator", "CurrencyISO",], "CLIENTACCOUNTMARGIN");
         let listener = this.lightStreamer.createSubscriptionListener(this.displayAccountStats.bind(this));
         subscription.addListener(listener);
         client.subscribe(subscription);

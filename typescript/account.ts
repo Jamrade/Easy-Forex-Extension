@@ -2,17 +2,15 @@
 
 interface AccountProcesses {
 
-    cookieHandler: Object;
+    credentialManager: Object;
 
     apiHandler: Object;
 
     lightStreamer: Object;
 
-    accountId: string;
+    credentials: {[key: string]: string};
 
     statsElements: {[key: string]: any}
-
-    getAccountId: () => string;
 
     subscribeToAccountStats: () => undefined;
 
@@ -24,35 +22,24 @@ interface AccountProcesses {
 
 class AccountHandler implements AccountProcesses {
 
-    cookieHandler: CookieHandler;
+    credentialManager: CredentialManager;
 
     apiHandler: APIHandler;
 
     lightStreamer: LightstreamerHandler;
 
-    accountId: string;
+    credentials: {[key: string]: string};
 
     statsElements: {[key: string]: HTMLElement | null};
 
 
 
     constructor() {
-        this.cookieHandler = new CookieHandler()
-        this.apiHandler = new APIHandler()
-        this.lightStreamer = new LightstreamerHandler()
-        this.accountId = this.getAccountId();
+        this.apiHandler = new APIHandler();
+        this.lightStreamer = new LightstreamerHandler();
+        this.credentialManager = new CredentialManager();
+        this.credentials = this.credentialManager.getCredentials();
         this.statsElements = this.initializeStatsElements();
-    }
-
-    getAccountId(): string {
-
-        let accountId: string = this.cookieHandler.searchForCookie("accountId");
-        
-        if (accountId == "") {
-            window.location.href = "../pages/Login.html";
-        }
-
-        return accountId
     }
 
     initializeStatsElements(): {[key: string]: HTMLElement | null} {
@@ -83,7 +70,7 @@ class AccountHandler implements AccountProcesses {
     subscribeToAccountStats(): undefined {
 
         let client: Object = this.lightStreamer.createClient("https://push.cityindex.com/", "STREAMINGALL")
-        let subscription: Object = this.lightStreamer.createSubscription("MERGE", [`CLIENTACCOUNTMARGIN.${this.accountId}`], ["TradeableFunds", "Cash", "NetEquity", "OpenTradeEquity", "Margin", "MarginIndicator", "CurrencyISO",], "CLIENTACCOUNTMARGIN")
+        let subscription: Object = this.lightStreamer.createSubscription("MERGE", [`CLIENTACCOUNTMARGIN.${this.credentials.accountId}`], ["TradeableFunds", "Cash", "NetEquity", "OpenTradeEquity", "Margin", "MarginIndicator", "CurrencyISO",], "CLIENTACCOUNTMARGIN")
         let listener: Object = this.lightStreamer.createSubscriptionListener(this.displayAccountStats.bind(this))
 
         subscription.addListener(listener);
@@ -98,6 +85,7 @@ class AccountHandler implements AccountProcesses {
                 this.statsElements[key].innerHTML = dataObject.getValue(key)
             }
         }
+        
     }
 
 }

@@ -2,21 +2,72 @@
 
 interface MarketOperations {
 
-    storageService: Object;
+    //storageService: Object;
 
     APIHandler: Object;
 
-    accountId: string;
+    credentialManager: Object;
 
-    getSearchOptions: () => {[key: string]: any};
+    credentials: {[key: string]: string}
 
-    searchMarkets: (searchType: string, searchText: string) => Array<string>;
+    createSearchWindow: () => undefined;
 
-    displaySearchedMarkets: () => undefined;
+    getSearchOptions: () => {[key: string]: string}
+
+    searchMarkets: (searchType: string, searchText: string) => undefined;
+
+    showResults:() => undefined;
+
+    selectMarketForStrategy: () => undefined;
 
 }
 
 /* ----------- implementations ------------ */
+
+class Markets implements MarketOperations {
+
+    APIHandler: APIHandler;
+
+    credentialManager: CredentialManager;
+
+    credentials: {[key:string]: string}
+
+    constructor() {
+        this.APIHandler = new APIHandler()
+        this.credentialManager = new CredentialManager()
+        this.credentials = this.credentialManager.getCredentials()
+    }
+
+    createSearchWindow(): undefined {
+        const addMarketButton: HTMLElement | null = document.getElementById("addMarket");
+        addMarketButton!.remove();
+
+        const mainContainer: HTMLElement | null = document.getElementById("marketsContainer");
+
+        const parentDiv: HTMLElement = document.createElement("div")
+        parentDiv.classList.add("marketSearchContainer")
+
+        parentDiv.appendChild(this.createSearchParameters())
+        
+    }
+
+    createSearchParameters(): HTMLElement {
+        let parentDiv: HTMLElement = document.createElement("div")
+
+        let fields: {[key: string]: Array<string>} = {
+            "FirstCurrencyISO": ["Currency One", "text"],
+            "SecondCurrencyISO": ["Currency Two", "text"],
+            ""
+        }
+
+        return parentDiv
+    }
+
+    searchMarkets(searchType: string, searchText: string): undefined {
+        
+    }
+
+}
 
 /* ------------- State Check ------------- */
 

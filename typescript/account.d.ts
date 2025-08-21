@@ -1,25 +1,27 @@
 interface AccountProcesses {
-    cookieHandler: Object;
+    credentialManager: Object;
     apiHandler: Object;
     lightStreamer: Object;
-    accountId: string;
+    credentials: {
+        [key: string]: string;
+    };
     statsElements: {
         [key: string]: any;
     };
-    getAccountId: () => string;
     subscribeToAccountStats: () => undefined;
     displayAccountStats: (dataObject: any) => undefined;
 }
 declare class AccountHandler implements AccountProcesses {
-    cookieHandler: CookieHandler;
+    credentialManager: CredentialManager;
     apiHandler: APIHandler;
     lightStreamer: LightstreamerHandler;
-    accountId: string;
+    credentials: {
+        [key: string]: string;
+    };
     statsElements: {
         [key: string]: HTMLElement | null;
     };
     constructor();
-    getAccountId(): string;
     initializeStatsElements(): {
         [key: string]: HTMLElement | null;
     };

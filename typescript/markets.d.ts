@@ -1,11 +1,18 @@
 interface MarketOperations {
-    storageService: Object;
     APIHandler: Object;
-    accountId: string;
-    getSearchOptions: () => {
-        [key: string]: any;
+    credentialManager: Object;
+    credentials: {
+        [key: string]: string;
     };
-    searchMarkets: (searchType: string, searchText: string) => Array<string>;
-    displaySearchedMarkets: () => null;
+    searchMarkets: (searchType: string, searchText: string) => undefined;
+}
+declare class Markets implements MarketOperations {
+    APIHandler: APIHandler;
+    credentialManager: CredentialManager;
+    credentials: {
+        [key: string]: string;
+    };
+    constructor();
+    searchMarkets(searchType: string, searchText: string): undefined;
 }
 //# sourceMappingURL=markets.d.ts.map

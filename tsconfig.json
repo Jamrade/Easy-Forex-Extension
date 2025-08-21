@@ -19,8 +19,11 @@
         "./typescript/account.ts",
         "./typescript/markets.ts",
         "./typescript/journal.ts",
-        "./typescript/strategy.ts",
+        "typescript/marketinfo.ts",
         "./typescript/lightstreamer.ts",
-        "./typescript/historic.ts"
+        "./typescript/historic.ts",
+        "./typescript/credentials.ts",
+        "./typescript/marketstats.ts",
+        "./typescript/indicator.ts"
     ]
 }

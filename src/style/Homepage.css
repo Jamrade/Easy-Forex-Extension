@@ -4,8 +4,74 @@
     overflow: hidden;
     margin: 0px;
     padding: 0px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family:'Franklin Gothic', 'Arial Narrow', Arial, sans-serif
 }
 
 /* Header Level */
 
+.headerLogo {
+    width: 300px;
+    height: 75px;
+}
+
+#mainHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
+#accountStatsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-weight: 400;
+}
+
+.statsTitle {
+    font-size: 12px;
+    color: #304330;
+}
+
+.statsInformation {
+    font-size: 16px;
+    color: black;
+}
+
+/* Page Level */
+
+#marketsContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+}
+
+#addMarket {
+    background-color: white;
+    font-size: 24px;
+    border: none;
+    margin-top: -24px;
+}
+
+@keyframes centerUnderLine {
+    from {
+        border: none;
+    }
+    to {
+        border-bottom: 1px;
+    }
+}
+
+#addMarket:hover {
+    animation: centerUnderLine 1s
+}
+
+/* Market Level */
