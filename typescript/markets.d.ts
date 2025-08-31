@@ -4,7 +4,11 @@ interface MarketOperations {
     credentials: {
         [key: string]: string;
     };
-    searchMarkets: (searchType: string, searchText: string) => undefined;
+    createSearchSection: () => undefined;
+    getParameters: () => {
+        [key: string]: string;
+    };
+    searchMarkets: () => undefined;
     showResults: (dataObject: {
         [key: string]: string;
     }) => null;
@@ -15,10 +19,19 @@ declare class Markets implements MarketOperations {
     credentials: {
         [key: string]: string;
     };
+    parameters: Array<string>;
     constructor();
-    searchMarkets(searchType: string, searchText: string): undefined;
-    showResults(dataObject: {
+    createSearchSection(): undefined;
+    createQueryElements(): HTMLElement;
+    createResultsSection(): HTMLElement;
+    getParameters(): {
         [key: string]: string;
+    };
+    searchMarkets(): undefined;
+    showResults(dataObject: {
+        [key: string]: any;
     }): null;
+    submitMarketSelection(): null;
 }
+declare let marketSearch: Markets;
 //# sourceMappingURL=markets.d.ts.map

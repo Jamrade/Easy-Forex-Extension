@@ -7,7 +7,7 @@ interface MarketStatsOperations {
     APIHandler: Object;
 
     marketElements: {[key: string]: HTMLElement | null}
-    
+
     initializeMarketElements: () => {[key: string]: any};
 
     subscribeToMarket: () => undefined;
@@ -24,15 +24,22 @@ class MarketStats implements MarketStatsOperations {
 
     marketElements: {[key: string]: HTMLElement | null};
 
-    constructor() {
+    marketId: string | null;
+
+    strategy: (dataObject: any) => any;
+
+    constructor(strategy: (dataObject: any) => any) {
         this.lightStreamer = new LightstreamerHandler();
         this.APIHandler = new APIHandler();
         this.marketElements = {}
+        this.marketId = localStorage.getItem("market")
+        this.strategy = strategy
     }
 
     initializeMarketElements(): {[key: string]: HTMLElement | null}{
 
-        const mainContainer: HTMLElement | null = document.getElementById("marketsContainer")
+        const mainContainer: HTMLElement | null = document.getElementById("setupContainer")
+        mainContainer!.replaceChildren()
 
         const parentDiv: HTMLElement = document.createElement("div")
         parentDiv.classList.add("marketContainer")
@@ -79,11 +86,16 @@ class MarketStats implements MarketStatsOperations {
 
     subscribeToMarket(): undefined {
         let client: Object = this.lightStreamer.createClient("https://push.cityindex.com/", "STREAMINGALL")
-        let subscription: Object = this.lightStreamer.createSubscription("MERGE", [`PRICES.154297`], ["Bid", "Offer", "Price", "High", "Low", "Change", "Direction", "StatusSummary"], "PRICES")
-        let listener: Object = this.lightStreamer.createSubscriptionListener(this.displayMarketInformation.bind(this))
+        let subscription: Object = this.lightStreamer.createSubscription("MERGE", [`PRICES.${this.marketId}`], ["Bid", "Offer", "Price", "High", "Low", "Change", "Direction", "StatusSummary"], "PRICES")
+        let listener: Object = this.lightStreamer.createSubscriptionListener(this.completeListener.bind(this))
 
         subscription.addListener(listener);
         client.subscribe(subscription);
+    }
+
+    completeListener(dataObject: any): any {
+        this.displayMarketInformation(dataObject)
+        this.strategy(dataObject).bind(this)
     }
 
     displayMarketInformation(dataObject: any): undefined {
@@ -110,7 +122,7 @@ class MarketStats implements MarketStatsOperations {
 let marketStatsHandler: MarketStats;
 
 window.addEventListener("DOMContentLoaded", () => {
-    marketStatsHandler = new MarketStats()
+    //marketStatsHandler = new MarketStats()
 
     //stratTest.subscribeToStrategy()
 })

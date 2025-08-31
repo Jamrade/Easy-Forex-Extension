@@ -61,6 +61,9 @@ class Indicator implements IndicatorComponents {
     }
 
     caclulateHistoricValues(calculations: number): Array<Array<number>> {
+
+        //Get most recent price bars
+
         return [[]]
     }
 }

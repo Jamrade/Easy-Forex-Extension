@@ -15,6 +15,7 @@
     <script src="../compiled-src/account.js" defer></script>
     <script src="../compiled-src/marketstats.js" defer></script>
     <script src="../compiled-src/markets.js" defer></script>
+    <script src="../compiled-src/strategy.js" defer></script>
 </head>
 <body>
     <header id="mainHeaderContainer">
@@ -53,10 +54,10 @@
         </div>
     </header>
     <div id="pageContainer">
-        <!-- This will be dynamically added per strategy instead of written out like this-->
-        <div id="marketsContainer">
-            <button id="addMarket" onclick="marketStatsHandler.initializeMarketElements(); marketStatsHandler.subscribeToMarket()"><b>+</b> Click to add a market </button>
+        <div id="setupContainer">
+             <button id="addMarket" onclick="marketSearch.createSearchSection();"><b>+</b> Click to add a market </button>
         </div>
+        <!-- This will be dynamically added per strategy instead of written out like this-->
     </div>
 </body>
 </html>

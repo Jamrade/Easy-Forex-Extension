@@ -23,6 +23,7 @@
         "./typescript/historic.ts",
         "./typescript/credentials.ts",
         "./typescript/marketstats.ts",
-        "./typescript/indicator.ts"
+        "./typescript/indicator.ts",
+        "./typescript/strategy.ts"
     ]
 }

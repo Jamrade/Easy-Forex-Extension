@@ -35,7 +35,7 @@
 }
 
 .statsTitle {
-    font-size: 12px;
+    font-size: 14px;
     color: #304330;
 }
 
@@ -45,33 +45,91 @@
 }
 
 /* Page Level */
-
-#marketsContainer {
+#pageContainer {
     display: flex;
-    flex-direction: column-reverse;
+    justify-content: space-evenly;
+}
+
+#setupContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
-    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 #addMarket {
     background-color: white;
     font-size: 24px;
     border: none;
-    margin-top: -24px;
-}
-
-@keyframes centerUnderLine {
-    from {
-        border: none;
-    }
-    to {
-        border-bottom: 1px;
-    }
-}
-
-#addMarket:hover {
-    animation: centerUnderLine 1s
 }
 
 /* Market Level */
+
+#marketSearchContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#queryContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    gap: 20px;
+}
+
+.searchLabel {
+    font-size: 16px;
+    color: black;
+}
+
+.searchInput {
+    border: none;
+    border-bottom: 2px solid #304330;
+    width: 200px;
+}
+
+#marketSubmit {
+    padding: 10px;
+    background-color: #1E5F02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#resultsContainer {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.marketValueContainer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.resultsTitle{
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#confirmMarketButton {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #1E5F02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Strategy Level */
+
+/* Stats Level */
+
+/* Graph Level */

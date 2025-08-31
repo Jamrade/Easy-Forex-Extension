@@ -112,11 +112,11 @@ class HistoricPrices implements HistoricOperations {
 
 /* ------------- State Check ------------- */
 window.addEventListener("DOMContentLoaded", () => {
-    let historic: HistoricPrices = new HistoricPrices()
+    // let historic: HistoricPrices = new HistoricPrices()
 
-    let timeStamp: string = historic.getTimeDelta("MONTH", 1, 1)
+    // let timeStamp: string = historic.getTimeDelta("MONTH", 1, 1)
 
     
-    historic.getHistoricAfterDate("MINUTE", 15, 4000, timeStamp, "154297")
-    historic.getMostRecentBars("MINUTE", 15, 25, "154297")
+    // historic.getHistoricAfterDate("MINUTE", 15, 4000, timeStamp, "154297")
+    // historic.getMostRecentBars("MINUTE", 15, 25, "154297")
 })

@@ -34,6 +34,7 @@ class Indicator {
     calculationLogic() {
     }
     caclulateHistoricValues(calculations) {
+        //Get most recent price bars
         return [[]];
     }
 }
