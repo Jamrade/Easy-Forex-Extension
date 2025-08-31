@@ -53,7 +53,7 @@ class MarketStats {
     }
     completeListener(dataObject) {
         this.displayMarketInformation(dataObject);
-        this.strategy(dataObject);
+        this.strategy(dataObject).bind(this);
     }
     displayMarketInformation(dataObject) {
         for (let key in this.marketElements) {

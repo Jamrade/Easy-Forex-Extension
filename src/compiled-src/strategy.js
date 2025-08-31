@@ -43,8 +43,22 @@ class Strategy {
         parentDiv.appendChild(submitButton);
         return parentDiv;
     }
-    readUpload() {
-        return "";
+    readUpload(file) {
+        let reader = new FileReader();
+        let scriptElement = document.getElementById("userStrategy");
+        if (!scriptElement) {
+            scriptElement = document.createElement("script");
+            scriptElement.id = "userStrategy";
+        }
+        else {
+            scriptElement.innerHTML = "";
+        }
+        reader.readAsText(file, "UTF-8");
+        reader.onload = (data) => {
+            scriptElement.innerHTML = (data.target.result).toString();
+        };
+        scriptElement.type = "text/javascript";
+        document.body.appendChild(scriptElement);
     }
     confirmSelectedStrategy() {
         let uploadInput = (document.getElementById("strategyUpload"));
@@ -53,27 +67,7 @@ class Strategy {
         if (uploadedFiles) {
             strategy = uploadedFiles[0];
         }
-        const scriptElement = document.createElement("script");
-        let reader = new FileReader();
-        reader.readAsText(strategy, "UTF-8");
-        reader.onload = (evt) => {
-            scriptElement.innerHTML = (evt.target.result).toString();
-        };
-        scriptElement.type = "text/javascript";
-        document.body.appendChild(scriptElement);
-        // let script: HTMLElement = document.createElement('script');
-        // var reader = new FileReader();
-        // reader.readAsText(myUploadedFile, "UTF-8");
-        // reader.onload = function(evt) {
-        //     script.innerHTML = evt.target.result;
-        // };
-        // script.type = "text/javascript";
-        // console.log("running the script: " + myUploadedFile.name);
-        // document.body.appendChild(script);
-    }
-    initializeSelectedStrategy() {
-    }
-    initializeMarketConnection() {
+        this.readUpload(strategy);
     }
 }
 /* ------------- State Check ------------- */ 

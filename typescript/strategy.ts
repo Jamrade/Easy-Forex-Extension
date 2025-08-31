@@ -1,20 +1,20 @@
 /* ----------- interfaces ------------*/
 
 interface StrategyOperations {
-    readUpload: () => string;
+
+    createFileUploadElements: () => undefined;
+
+    readUpload: (file: File) => undefined;
 
     confirmSelectedStrategy: () => undefined;
 
-    initializeSelectedStrategy:() => undefined;
-
-    initializeMarketConnection: () => undefined;
 }
 
 /* ----------- implementations ------------ */
 
 class Strategy implements StrategyOperations {
 
-    createFileUploadElements() {
+    createFileUploadElements(): undefined {
         const setupContainer: HTMLElement | null = document.getElementById("setupContainer");
         setupContainer!.replaceChildren()
 
@@ -70,8 +70,28 @@ class Strategy implements StrategyOperations {
         return parentDiv
     }
 
-    readUpload(): string {
-        return ""
+    readUpload(file: File): undefined {
+        let reader: FileReader = new FileReader()
+        let scriptElement: HTMLScriptElement | null = document.getElementById("userStrategy") as HTMLScriptElement
+
+        if(!scriptElement) {
+            scriptElement = document.createElement("script");
+            scriptElement.id = "userStrategy"
+        } else {
+            scriptElement.innerHTML = ""
+        }
+
+        reader.readAsText(file, "UTF-8")
+
+        reader.onload = (data) => {
+            scriptElement.innerHTML = (data.target!.result)!.toString()
+        }
+
+        scriptElement.type = "text/javascript"
+
+        document.body.appendChild(scriptElement)
+
+        
     }
 
     confirmSelectedStrategy(): undefined {
@@ -83,38 +103,10 @@ class Strategy implements StrategyOperations {
             strategy = uploadedFiles[0]
         }
 
-        const scriptElement: HTMLScriptElement = document.createElement("script")
-
-        let reader: FileReader = new FileReader()
-        reader.readAsText(strategy, "UTF-8")
-        reader.onload = (evt) => {
-            scriptElement.innerHTML = (evt.target!.result)!.toString()
-        }
-
-        scriptElement.type = "text/javascript"
-
-        document.body.appendChild(scriptElement)
-        
-        
-
-        // let script: HTMLElement = document.createElement('script');
-        // var reader = new FileReader();
-        // reader.readAsText(myUploadedFile, "UTF-8");
-        // reader.onload = function(evt) {
-        //     script.innerHTML = evt.target.result;
-        // };
-        // script.type = "text/javascript";
-        // console.log("running the script: " + myUploadedFile.name);
-        // document.body.appendChild(script);
-    }
-
-    initializeSelectedStrategy(): undefined {
+        this.readUpload(strategy)
 
     }
 
-    initializeMarketConnection(): undefined {
-
-    }
 }
 
 /* ------------- State Check ------------- */

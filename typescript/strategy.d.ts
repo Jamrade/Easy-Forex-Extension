@@ -1,16 +1,13 @@
 interface StrategyOperations {
-    readUpload: () => string;
+    createFileUploadElements: () => undefined;
+    readUpload: (file: File) => undefined;
     confirmSelectedStrategy: () => undefined;
-    initializeSelectedStrategy: () => undefined;
-    initializeMarketConnection: () => undefined;
 }
 declare class Strategy implements StrategyOperations {
-    createFileUploadElements(): void;
+    createFileUploadElements(): undefined;
     createHeader(): HTMLElement;
     createUploadArea(): HTMLElement;
-    readUpload(): string;
+    readUpload(file: File): undefined;
     confirmSelectedStrategy(): undefined;
-    initializeSelectedStrategy(): undefined;
-    initializeMarketConnection(): undefined;
 }
 //# sourceMappingURL=strategy.d.ts.map
